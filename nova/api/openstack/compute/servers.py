@@ -993,6 +993,14 @@ class Controller(wsgi.Controller):
         if 'personality' in body['server']:
             msg = _("Personality cannot be updated.")
             raise exc.HTTPBadRequest(explanation=msg)
+         
+        if 'status' in body['server']:
+            status = body['server']['status']
+            vm_state = common.vm_state_from_status(status)
+            if  vm_state == None:
+                msg =_("Invalid server status '{}'".format(status)) 
+                raise exc.HTTPBadRequest(explanation=msg)
+            update_dict['vm_state'] = vm_state
 
         try:
             instance = self.compute_api.get(ctxt, id)
