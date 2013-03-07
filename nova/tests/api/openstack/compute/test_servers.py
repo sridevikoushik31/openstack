@@ -1275,6 +1275,7 @@ class ServersControllerTest(test.TestCase):
     def test_update_server_invalid_status(self):
         self.stubs.Set(db, 'instance_get',
                 fakes.fake_instance_get(name='server_test'))
+        print self
         req = fakes.HTTPRequest.blank('/v2/fake/servers/%s' % FAKE_UUID)
         req.method = 'PUT'
         req.content_type = 'application/json'
